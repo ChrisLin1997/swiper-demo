@@ -24,23 +24,33 @@
 <script setup>
 import { computed, onMounted, ref, watchEffect } from 'vue'
 
+let timerId = null
+
 const amout = 5
 const width = 600
 const swiper = ref(null)
 const activeScrollPosition = ref(0)
 const activeImg = computed(() => activeScrollPosition.value / width)
-watchEffect(() => console.log(activeImg.value))
 
+// auto slide
+onMounted(() => {
+  timerId = setInterval(() => {
+    activeScrollPosition.value += 600
+  }, 3000)
+})
+
+// edge case
 watchEffect(() => {
-  console.log(activeScrollPosition.value)
   if (0 > activeScrollPosition.value) activeScrollPosition.value = (amout - 1) * width
   if (activeScrollPosition.value > (amout - 1) * width) activeScrollPosition.value = 0
 })
 
+// scroll behavior
 onMounted(() => {
   watchEffect(() => swiper.value.scrollTo({ left: activeScrollPosition.value, behavior: 'smooth' }))
 })
 
+// handlers
 const handleArrow = (type) => {
   const mapping = {
     left: () => activeScrollPosition.value -= width,
