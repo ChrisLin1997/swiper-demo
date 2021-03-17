@@ -2,10 +2,7 @@
 <main>
   <div @click="handleArrow('left')" class="left-arrow"></div>
   <section ref="swiper" class="swiper">
-    <article
-      v-for="num of amout"
-      class="swiper-item"
-    >
+    <article v-for="num of amout" class="swiper-item">
       <img :src="`https://picsum.photos/${width}/400?random=${num}`" />
     </article>
   </section>
@@ -22,7 +19,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watchEffect } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watchEffect } from 'vue'
 
 let timerId = null
 
@@ -38,6 +35,7 @@ onMounted(() => {
     activeScrollPosition.value += 600
   }, 3000)
 })
+onUnmounted(() => clearInterval(timerId))
 
 // edge case
 watchEffect(() => {
@@ -79,9 +77,9 @@ main {
     height: 0px;
     left: 10px;
     top: calc(50% - 10px);
-    border-right: 30px solid #00000099;
-    border-top: 30px solid transparent;
-    border-bottom: 30px solid transparent;
+    border-right: 24px solid #ffffff99;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
     cursor: pointer;
   }
   .right-arrow {
@@ -90,9 +88,9 @@ main {
     height: 0px;
     right: 10px;
     top: calc(50% - 10px);
-    border-left: 30px solid #00000099;
-    border-top: 30px solid transparent;
-    border-bottom: 30px solid transparent;
+    border-left: 24px solid #ffffff99;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
     cursor: pointer;
   }
 }
@@ -126,6 +124,6 @@ footer {
 }
 
 .active {
-  background: aqua;
+  background: #47B4DF;
 }
 </style>
